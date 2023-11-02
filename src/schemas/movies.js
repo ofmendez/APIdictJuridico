@@ -1,4 +1,4 @@
-import z from 'zod'
+import z from 'zod';
 
 const movieSchema = z.object({
   title: z.string({
@@ -19,12 +19,12 @@ const movieSchema = z.object({
       invalid_type_error: 'Movie genre must be an array of enum Genre'
     }
   )
-})
+});
 
 export function validateMovie (input) {
-  return movieSchema.safeParse(input)
+  return movieSchema.safeParse(input);
 }
 
 export function validatePartialMovie (input) {
-  return movieSchema.partial().safeParse(input)
+  return movieSchema.partial().safeParse(input);
 }

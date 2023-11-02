@@ -1,29 +1,24 @@
-import { Hono } from 'hono'
+import { Hono } from 'hono';
 import { serve } from "@hono/node-server";
-import { prettyJSON } from 'hono/pretty-json'
-import { corsMiddleware } from './middlewares/cors.js'
-import { createUserRouter } from './routes/users.js'
+import { prettyJSON } from 'hono/pretty-json';
+import { corsMiddleware } from './middlewares/cors.js';
+import { createUserRouter } from './routes/users.js';
 /*global   */
 
 export const createApp = ({ userModel }) => {
     
-    const app = new Hono()
+    const app = new Hono();
 
-    app.use('*', prettyJSON()) 
-    app.use('*',corsMiddleware())
+    app.use('*', prettyJSON());
+    app.use('*',corsMiddleware());
     // app.disable('x-powered-by')
-    const user = app.route('/users')
+    const user = app.route('/users');
 
-    createUserRouter({ user, userModel })
-    app.use('/', () => {
-        return {
-            status: 200,
-            body: 'Hello World'
-        }
-    });
+    createUserRouter({ user, userModel });
+    app.use('/', (c) => {return c.json({ 'Hono meets': 'Node.js' });});
 
     serve(app, (info) => {
         console.log(`Listening on http://localhost:${info.port}`); 
     });
 
-}
+};
