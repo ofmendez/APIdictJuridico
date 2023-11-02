@@ -1,0 +1,39 @@
+### Recuperar todas las películas
+GET http://localhost:5000/users
+
+### Recuperar una película por id
+GET http://localhost:5000/users/dcdd0fad-a94c-4810-8acc-5f108d3b18c3
+
+### Recuperar todas las películas por un género
+GET http://localhost:5000/users?genre=sci-fi
+
+### Crear una película con POST
+POST http://localhost:5000/users
+Content-Type: application/json
+
+{
+  "sql": "SELECT * FROM users",
+  "title": "The Godfather 22",
+  "year": 1975,
+  "director": "Francis Ford Coppola",
+  "duration": 175,
+  "poster": "https://img.fruugo.com/product/4/49/14441494_max.jpg",
+  "genre": [
+    "Crime",
+    "Drama"
+  ]
+}
+
+### Recuperar todas las películas
+GET http://localhost:5000/users
+
+### Borrar una película
+DELETE http://localhost:5000/users/c8a7d63f-3b04-44d3-9d95-8782fd7dcfaf
+
+### Actualizar una película
+PATCH http://localhost:5000/users/dcdd0fad-a94c-4810-8acc-5f108d3b18c3
+Content-Type: application/json
+
+{
+  "year": 1942
+}
