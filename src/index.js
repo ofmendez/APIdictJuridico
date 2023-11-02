@@ -3,8 +3,8 @@ import { serve } from "@hono/node-server";
 import { prettyJSON } from 'hono/pretty-json'
 import { corsMiddleware } from './middlewares/cors.js'
 import { createUserRouter } from './routes/users.js'
-// import 'dotenv/config'
 /*global   */
+
 export const createApp = ({ userModel }) => {
     
     const app = new Hono()
