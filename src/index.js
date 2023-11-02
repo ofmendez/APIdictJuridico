@@ -5,7 +5,7 @@ import { createUserRouter } from './routes/users.js'
 // import 'dotenv/config'
 /*global Bun, process */
 export const createApp = ({ userModel }) => {
-    // const app = express()
+    
     const app = new Hono()
 
     app.use('*', prettyJSON()) 
@@ -21,10 +21,6 @@ export const createApp = ({ userModel }) => {
         }
     });
     const PORT = process.env.PORT ?? 5000
-
-    // app.listen(PORT, () => {
-    //     console.log(`server listening on port http://localhost:${PORT}`)
-    // })
 
     const server = Bun.serve({
         port: PORT,

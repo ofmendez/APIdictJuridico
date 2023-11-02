@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto'
 import { readJSON } from '../../utils.js'
 
-const movies = readJSON('./models/local-fs/users.json')
+const movies = readJSON('@src/models/local-fs/users.json')
 
 export class UserModel {
   static async getAll({ genre }) {

@@ -1,29 +1,30 @@
 {
-  "name": "mongotest",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": " bun --watch src/environment/local.js",
-    "start": "bun ./src/environment/local.js",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0"
-  },
-  "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "hono": "3.9.0"
-  },
-  "devDependencies": {
-    "eslint": "^8.45.0",
-    "eslint-plugin-react": "^7.32.2",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.3",
-    "standard": "17.1.0",
-    "zod": "3.21.4",
-    "bun-types": "latest"
-  },
-  "eslintConfig": {
-    "extends": "./node_modules/standard/eslintrc.json",
-    "allowIndentationTabs": true
-  }
+	"name": "mongotest",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"dev": " bun --watch src/environment/local.js",
+		"start": "bun ./dist/server.js",
+		"build": "bun build --target=bun ./src/environment/local.js --outfile=dist/server.js",
+		"lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0"
+	},
+	"dependencies": {
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"hono": "3.9.0"
+	},
+	"devDependencies": {
+		"eslint": "^8.45.0",
+		"eslint-plugin-react": "^7.32.2",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"eslint-plugin-react-refresh": "^0.4.3",
+		"standard": "17.1.0",
+		"zod": "3.21.4",
+		"bun-types": "latest"
+	},
+	"eslintConfig": {
+		"extends": "./node_modules/standard/eslintrc.json",
+		"allowIndentationTabs": true
+	}
 }
