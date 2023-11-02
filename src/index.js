@@ -3,7 +3,7 @@ import { prettyJSON } from 'hono/pretty-json'
 import { corsMiddleware } from './middlewares/cors.js'
 import { createUserRouter } from './routes/users.js'
 // import 'dotenv/config'
-/*global Bun, process */
+/*global  process */
 export const createApp = ({ userModel }) => {
     
     const app = new Hono()
@@ -22,11 +22,12 @@ export const createApp = ({ userModel }) => {
     });
     const PORT = process.env.PORT ?? 5000
 
-    const server = Bun.serve({
-        port: PORT,
-        fetch: app.fetch,
-    });
+    // const server = Bun.serve({
+    //     port: PORT,
+    //     fetch: app.fetch,
+    // });
 
-    console.log(`Listeniiing on localhost:${server.port}`);
+    console.log(`Listeniiing on localhost:${PORT}`);
+    return app;
 
 }
