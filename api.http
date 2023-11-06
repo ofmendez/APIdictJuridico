@@ -1,3 +1,4 @@
+
 ### Recuperar ruta de la API
 GET http://localhost:3000/
 ### Recuperar todas las películas

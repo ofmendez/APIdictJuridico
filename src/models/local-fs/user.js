@@ -156,6 +156,7 @@ const movies = JSON.parse(`[
 ]`);
 
 export class UserModel {
+
   static async getAll({ genre }) {
     if (genre) {
       return movies.filter((movie) =>
