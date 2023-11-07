@@ -1,7 +1,7 @@
 import { MongoClient, ObjectId, ServerApiVersion } from 'mongodb';
 import { randomUUID } from 'node:crypto';
 
-const uri = '----';
+const uri = `mongodb+srv://ofmendez:${process.env.ATLAS_PASS}@cluster0.bss36fz.mongodb.net/?retryWrites=true&w=majority`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
