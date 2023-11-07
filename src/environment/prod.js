@@ -1,5 +1,6 @@
-import { createApp } from '../index.jsx';
+import createApp from '../index.jsx';
 
-import { UserModel } from '../models/mongo-prod/user.js';
+import { MovieModel } from '../models/mongo/movie.js';
+import { UserModel } from '../models/mongo/user.js';
 
-createApp({ userModel: UserModel });
+export default createApp({ userModel: UserModel, movieModel: MovieModel });
