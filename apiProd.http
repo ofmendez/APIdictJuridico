@@ -1,20 +1,20 @@
 
 ### Recuperar ruta de la API
-GET http://localhost:3000/
+GET https://db.diccionarioexplore.com/
 ### Recuperar todas las películas
-GET http://localhost:3000/users
+GET https://db.diccionarioexplore.com/users
 
 ### Recuperar todas las películas por título
-GET http://localhost:3000/movies
+GET https://db.diccionarioexplore.com/movies
 
 ### Recuperar una película por id
-GET http://localhost:3000/users/78492341-3a69-4c42-b180-95d3bab47a7e
+GET https://db.diccionarioexplore.com/users/78492341-3a69-4c42-b180-95d3bab47a7e
 
 ### Recuperar todas las películas por un género
-GET http://localhost:3000/users?role=admin
+GET https://db.diccionarioexplore.com/users?role=admin
 
 ### Crear una película con POST
-POST http://localhost:3000/users
+POST https://db.diccionarioexplore.com/users
 Content-Type: application/json
 
 {
@@ -27,13 +27,13 @@ Content-Type: application/json
 }
 
 ### Recuperar todas las películas
-GET http://localhost:3000/users
+GET https://db.diccionarioexplore.com/users
 
 ### Borrar una película
-DELETE http://localhost:3000/users/78492341-3a69-4c42-b180-95d3bab47a7e
+DELETE https://db.diccionarioexplore.com/users/78492341-3a69-4c42-b180-95d3bab47a7e
 
 ### Actualizar una película
-PATCH http://localhost:3000/users/4
+PATCH https://db.diccionarioexplore.com/users/4
 Content-Type: application/json
 
 {

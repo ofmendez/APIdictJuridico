@@ -1,4 +1,4 @@
-import { MongoClient, ObjectId } from 'mongodb';
+import { MongoClient } from 'mongodb';
 import { randomUUID } from 'node:crypto';
 
 const uri = `mongodb+srv://ofmendez:${process.env.ATLAS_PASS}@cluster0.bss36fz.mongodb.net/?retryWrites=true&w=majority`;
@@ -12,7 +12,7 @@ async function connect () {
 	try {
 		await client.connect();
 		const database = client.db('dictionary');
-		return database.collection('users');
+		return database.collection('movies');
 	} catch (error) {
 		console.error('Error connecting to the database');
 		console.error(error);
@@ -48,8 +48,8 @@ export class MovieModel {
 
 	async getById ({ id }) {
 		const db = await connect();
-		const objectId = new ObjectId(id);
-		return db.findOne({ _id: objectId });
+		// const objectId = new ObjectId(id);
+		return db.findOne({ _id: id });
 	}
 
 	async create ({ input }) {
@@ -66,16 +66,16 @@ export class MovieModel {
 
 	async delete ({ id }) {
 		const db = await connect();
-		const objectId = new ObjectId(id);
-		const { deletedCount } = await db.deleteOne({ _id: objectId });
+		// const objectId = new ObjectId(id);
+		const { deletedCount } = await db.deleteOne({ _id: id });
 		return deletedCount > 0;
 	}
 
 	async update ({ id, input }) {
 		const db = await connect();
-		const objectId = new ObjectId(id);
+		// const objectId = new ObjectId(id);
 
-		const { ok, value } = await db.findOneAndUpdate({ _id: objectId }, { $set: input }, { returnNewDocument: true });
+		const { ok, value } = await db.findOneAndUpdate({ _id: id }, { $set: input }, { returnNewDocument: true });
 
 		if (!ok) return false;
 
