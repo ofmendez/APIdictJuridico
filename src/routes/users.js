@@ -1,12 +1,12 @@
 import { UserController } from '../controllers/users.js';
 
-export const createUserRouter = ({ user, userModel }) => {
-	const userController = new UserController({ userModel });
+export const createUserRouter = ({ route, model }) => {
+	const userController = new UserController({ model });
 
-	user.get('/', userController.getAll);
-	user.post('/', userController.create);
+	route.get('/', userController.getAll);
+	route.post('/', userController.create);
 
-	user.get('/:id', userController.getById);
-	user.delete('/:id', userController.delete);
-	user.patch('/:id', userController.update);
+	route.get('/:id', userController.getById);
+	route.delete('/:id', userController.delete);
+	route.patch('/:id', userController.update);
 };

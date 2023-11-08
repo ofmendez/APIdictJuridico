@@ -1,9 +1,17 @@
-import { randomUUID } from 'node:crypto';
 import users_ from './usersJson.js';
+import { randomUUID } from 'node:crypto';
 
 const users = JSON.parse(users_);
 export class UserModel {
-	static async getAll ({ role }) {
+	constructor () {
+		console.log('->Local UserModel');
+	};
+
+	setEnv (env) {
+		this.env = env;
+	};
+
+	async getAll ({ role }) {
 		if (role) {
 			return users.filter((user) =>
 				user.role.toLowerCase() === role.toLowerCase()
@@ -13,12 +21,12 @@ export class UserModel {
 		return users;
 	}
 
-	static async getById ({ id }) {
+	async getById ({ id }) {
 		const user = users.find((user) => user.id.toString() === id.toString());
 		return user;
 	}
 
-	static async create ({ input }) {
+	async create ({ input }) {
 		const newUser = {
 			id: randomUUID(),
 			...input
@@ -29,7 +37,7 @@ export class UserModel {
 		return newUser;
 	}
 
-	static async delete ({ id }) {
+	async delete ({ id }) {
 		const userIndex = users.findIndex((user) => user.id.toString() === id.toString());
 		if (userIndex === -1) return false;
 
@@ -37,7 +45,7 @@ export class UserModel {
 		return true;
 	}
 
-	static async update ({ id, input }) {
+	async update ({ id, input }) {
 		const userIndex = users.findIndex((user) => user.id.toString() === id.toString());
 		if (userIndex === -1) return false;
 

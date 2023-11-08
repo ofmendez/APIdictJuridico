@@ -1,16 +1,12 @@
-import { MongoClient, ObjectId, ServerApiVersion } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import { randomUUID } from 'node:crypto';
 
-const uri = `mongodb+srv://ofmendez:${process.env.ATLAS_PASS}@cluster0.bss36fz.mongodb.net/?retryWrites=true&w=majority`;
+// const uri = `mongodb+srv://ofmendez:${process.env.ATLAS_PASS}@cluster0.bss36fz.mongodb.net/?retryWrites=true&w=majority`;
+// const uri = 'mongodb://localhost:27017';
+const uri = `mongodb://myUserAdmin:${process.env.LINODE_PASS}@172-233-187-25.ip.linodeusercontent.com:27017/?authMechanism=DEFAULT`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-	serverApi: {
-		version: ServerApiVersion.v1,
-		strict: true,
-		deprecationErrors: true
-	}
-});
+const client = new MongoClient(uri);
 
 async function connect () {
 	try {
@@ -25,7 +21,15 @@ async function connect () {
 }
 
 export class MovieModel {
-	static async getAll ({ genre }) {
+	constructor () {
+		console.log('->Mongo MovieModel');
+	};
+
+	setEnv (env) {
+		this.env = env;
+	};
+
+	async getAll ({ genre }) {
 		const db = await connect();
 
 		if (genre) {
@@ -42,13 +46,13 @@ export class MovieModel {
 		return db.find({}).toArray();
 	}
 
-	static async getById ({ id }) {
+	async getById ({ id }) {
 		const db = await connect();
 		const objectId = new ObjectId(id);
 		return db.findOne({ _id: objectId });
 	}
 
-	static async create ({ input }) {
+	async create ({ input }) {
 		const db = await connect();
 		input._id = randomUUID();
 
@@ -60,14 +64,14 @@ export class MovieModel {
 		};
 	}
 
-	static async delete ({ id }) {
+	async delete ({ id }) {
 		const db = await connect();
 		const objectId = new ObjectId(id);
 		const { deletedCount } = await db.deleteOne({ _id: objectId });
 		return deletedCount > 0;
 	}
 
-	static async update ({ id, input }) {
+	async update ({ id, input }) {
 		const db = await connect();
 		const objectId = new ObjectId(id);
 

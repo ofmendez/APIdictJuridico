@@ -1,9 +1,9 @@
 import { validateUser, validatePartialUser } from '../schemas/users.js';
 
 export class UserController {
-	constructor ({ userModel }) {
-		this.userModel = userModel;
-		console.log('UserController', userModel);
+	constructor ({ model }) {
+		this.userModel = model;
+		console.log('UserController', typeof this.userModel);
 	}
 
 	getAll = async (c) => {

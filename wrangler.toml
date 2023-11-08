@@ -1,3 +1,8 @@
-name = "apidicjuridico"
-compatibility_date = "2023-01-01"
-compatibility_flags = [ "nodejs_compat" ]
+# name = "apidicjuridico"
+# compatibility_date = "2023-01-01"
+# compatibility_flags = [ "nodejs_compat" ]
+# node_compat = true
+# [vars]
+# HEALTH = "production_value"
+# [dev]
+# port=3000

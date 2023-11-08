@@ -18,12 +18,12 @@ POST http://localhost:3000/users
 Content-Type: application/json
 
 {
-  "sql": "SELECT * FROM users",
-  "email": "totoyKaren@asdasd.com",
-  "password": "fefefefefa",
-  "name": "Danna Mendez",
-  "role": "user",
-  "avatar": "https://img.fruugo.com/product/4/49/14441494_max.jpg"
+	"sql": "SELECT * FROM users",
+	"email": "LINODE@asdasd.com",
+	"password": "fefefefefa",
+	"name": "Danna Mendez",
+	"role": "user",
+	"avatar": "https://img.fruugo.com/product/4/49/14441494_max.jpg"
 }
 
 ### Recuperar todas las películas

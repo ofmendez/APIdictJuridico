@@ -1,15 +1,15 @@
 {
 	"type": "module",
 	"scripts": {
-		"dev": "bun --watch src/environment/local.js",
-		"devold": "vite",
-		"buildNo": "vite build",
+		"dev": "bun --watch src/environment/prod.js",
+		"build": "esbuild --bundle ./src/environment/prod.js --platform=node --format=esm --outfile=dist/_worker.js --minify",
+		"pre": "npm run build && bun ./dist/_worker.js ",
 		"lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-		"build": "esbuild --bundle ./src/environment/prod.js --platform=node --format=esm --outfile=dist/_worker.js",
-		"preview": "wrangler pages dev dist",
+		"start": "npm run build && bun dist/_worker.js",
+		
 		"deploy": "$npm_execpath run build && wrangler pages deploy dist",
-		"deployw": "wrangler pages deploy dist",
-		"pre": "npm run build && bun ./dist/_worker.js "
+		"preview": "wrangler pages dev dist",
+		"devw": "wrangler dev ./src/environment/prod.js"
 	},
 	"dependencies": {
 		"hono": "3.9.2",
@@ -17,14 +17,10 @@
 		"saslprep": "1.0.3"
 	},
 	"devDependencies": {
-		"@cloudflare/workers-types": "^4.20230914.0",
-		"@hono/vite-cloudflare-pages": "^0.0.2",
-		"@hono/vite-dev-server": "^0.1.0",
 		"esbuild": "0.13.5",
 		"eslint": "^8.45.0",
 		"standard": "^17.1.0",
-		"vite": "^4.5.0",
-		"wrangler": "^3.14.0"
+		"vite": "^4.5.0"
 	},
 	"eslintConfig": {
 		"extends": "./node_modules/standard/eslintrc.json",

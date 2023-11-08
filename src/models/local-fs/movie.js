@@ -1,9 +1,17 @@
-import { randomUUID } from 'node:crypto';
 import movies_ from './moviesJson.js';
+import { randomUUID } from 'node:crypto';
 
 const movies = JSON.parse(movies_);
 export class MovieModel {
-	static async getAll ({ genre }) {
+	constructor () {
+		console.log('->Local MovieModel');
+	};
+
+	setEnv (env) {
+		this.env = env;
+	};
+
+	async getAll ({ genre }) {
 		if (genre) {
 			return movies.filter((movie) =>
 				movie.genre.some((g) => g.toLowerCase() === genre.toLowerCase())
@@ -13,12 +21,12 @@ export class MovieModel {
 		return movies;
 	}
 
-	static async getById ({ id }) {
+	async getById ({ id }) {
 		const movie = movies.find((movie) => movie.id.toString() === id.toString());
 		return movie;
 	}
 
-	static async create ({ input }) {
+	async create ({ input }) {
 		const newMovie = {
 			id: randomUUID(),
 			...input
@@ -29,7 +37,7 @@ export class MovieModel {
 		return newMovie;
 	}
 
-	static async delete ({ id }) {
+	async delete ({ id }) {
 		const movieIndex = movies.findIndex((movie) => movie.id.toString() === id.toString());
 		if (movieIndex === -1) return false;
 
@@ -37,7 +45,7 @@ export class MovieModel {
 		return true;
 	}
 
-	static async update ({ id, input }) {
+	async update ({ id, input }) {
 		const movieIndex = movies.findIndex((movie) => movie.id.toString() === id.toString());
 		if (movieIndex === -1) return false;
 

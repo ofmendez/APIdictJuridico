@@ -1,12 +1,12 @@
 import { MovieController } from '../controllers/movies.js';
 
-export const createMovieRouter = ({ movie, movieModel }) => {
-	const movieController = new MovieController({ movieModel });
+export const createMovieRouter = ({ route, model }) => {
+	const movieController = new MovieController({ model });
 
-	movie.get('/', movieController.getAll);
-	movie.post('/', movieController.create);
+	route.get('/', movieController.getAll);
+	route.post('/', movieController.create);
 
-	movie.get('/:id', movieController.getById);
-	movie.delete('/:id', movieController.delete);
-	movie.patch('/:id', movieController.update);
+	route.get('/:id', movieController.getById);
+	route.delete('/:id', movieController.delete);
+	route.patch('/:id', movieController.update);
 };
