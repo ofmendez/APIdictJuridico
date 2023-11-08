@@ -3,6 +3,7 @@ dist
 .wrangler
 .dev.vars
 .env 
+.lockb
 # Change them to your taste:
 wrangler.toml
 package-lock.json
