@@ -23,10 +23,10 @@ export class MovieController {
 		const body = await c.req.json();
 		const result = validateMovie(body);
 
-		if (!result.success) {
+		if (!result.success)
 			// 422 Unprocessable Entity
 			return c.json({ error: 'unprocessable' }, 400);
-		}
+
 		const newMovie = await this.movieModel.create({ input: result.data });
 
 		return c.json(newMovie, 201);
@@ -36,9 +36,8 @@ export class MovieController {
 		const { id } = c.req.param();
 		const result = await this.movieModel.delete({ id });
 
-		if (result === false) {
+		if (result === false)
 			return c.json({ message: 'Movie not found' }, 404);
-		}
 
 		return c.json({ message: 'Movie deleted' });
 	};
@@ -47,9 +46,8 @@ export class MovieController {
 		const body = await c.req.json();
 		const result = validatePartialMovie(body);
 
-		if (!result.success) {
+		if (!result.success)
 			return c.json({ error: JSON.parse(result.error.message) }, 400);
-		}
 
 		const { id } = c.req.param();
 

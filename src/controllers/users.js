@@ -24,10 +24,10 @@ export class UserController {
 		console.log('create', body);
 		const result = validateUser(body);
 
-		if (!result.success) {
+		if (!result.success)
 			return c.json({ error: 'unprocessable', message: JSON.parse(result.error.message) }, 422);
 			// return c.json({ error: "unprocessable" }, 400);// 422 Unprocessable Entity
-		}
+
 		const newUser = await this.userModel.create({ input: result.data });
 
 		return c.json(newUser, 201);
@@ -37,9 +37,8 @@ export class UserController {
 		const { id } = c.req.param();
 		const result = await this.userModel.delete({ id });
 
-		if (result === false) {
+		if (result === false)
 			return c.json({ message: 'User not found' }, 404);
-		}
 
 		return c.json({ message: 'User deleted' });
 	};
@@ -48,9 +47,8 @@ export class UserController {
 		const body = await c.req.json();
 		const result = validatePartialUser(body);
 
-		if (!result.success) {
+		if (!result.success)
 			return c.json({ error: JSON.parse(result.error.message) }, 400);
-		}
 
 		const { id } = c.req.param();
 
