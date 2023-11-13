@@ -32,7 +32,7 @@ export class MovieModel {
 	async getAll ({ genre }) {
 		const db = await connect();
 
-		if (genre) {
+		if (genre)
 			return db.find({
 				genre: {
 					$elemMatch: {
@@ -41,7 +41,6 @@ export class MovieModel {
 					}
 				}
 			}).toArray();
-		}
 
 		return db.find({}).toArray();
 	}

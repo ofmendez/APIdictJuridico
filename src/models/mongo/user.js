@@ -32,7 +32,7 @@ export class UserModel {
 	async getAll ({ genre }) {
 		const db = await connect();
 
-		if (genre) {
+		if (genre)
 			return db.find({
 				genre: {
 					$elemMatch: {
@@ -41,7 +41,6 @@ export class UserModel {
 					}
 				}
 			}).toArray();
-		}
 
 		return db.find({}).toArray();
 	}
