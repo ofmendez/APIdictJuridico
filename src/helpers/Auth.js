@@ -1,6 +1,6 @@
 const checkAuth = async (_email, _password) => {
 	let result = { exist: false, user: { id: -1 } };
-	if (_email.toLowerCase() === 'ofmendez@gmail.com' && _password === `${process.env.ADMIN_PASS}`)
+	if (_email.toLowerCase() === 'margarita.ricaurte@ricaurteruedaabogados.com' && _password === `${process.env.ADMIN_PASS}`)
 		result = { exist: true, user: { id: 1 } };
 	return result;
 };
