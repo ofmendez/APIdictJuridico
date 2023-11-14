@@ -2,7 +2,20 @@
 ### Recuperar ruta de la API
 GET http://localhost:3000/
 ### Recuperar todas las películas
-GET http://localhost:3000/users
+GET http://localhost:3000/terms
+
+### Recuperar login
+GET http://localhost:3000/login
+
+{
+	"email": "sdsfsdf",
+	"password": "sdfsdf"
+}
+
+### Recuperar login
+GET http://localhost:3000/login?email=pepe%40gmail.com&password=1234
+### Recuperar login
+GET http://localhost:3000/login?email=ofmendez%40gmail.com&password=321321321
 
 ### Recuperar todas las películas por título
 GET http://localhost:3000/movies
@@ -13,18 +26,63 @@ GET http://localhost:3000/users/78492341-3a69-4c42-b180-95d3bab47a7e
 ### Recuperar todas las películas por un género
 GET http://localhost:3000/users?role=admin
 
+# term
+# meanings 
+#    descriptor
+#    year
+#    subject []
+#    definition
+#    source
+# created_at
+# updated_at
+# updated_by
 ### Crear una película con POST
-POST http://localhost:3000/users
+POST http://localhost:3000/terms
 Content-Type: application/json
 
 {
-	"sql": "SELECT * FROM users",
-	"email": "LINODE@asdasd.com",
-	"password": "fefefefefa",
-	"name": "Danna Mendez",
-	"role": "user",
-	"avatar": "https://img.fruugo.com/product/4/49/14441494_max.jpg"
+  "term": "Palabra 2",
+  "meanings": [
+	 {
+		"descriptor": "descriptor C",
+		"year": 1944,
+		"subject": "Sentencia",
+		"definition": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur in quisquam eos iste reprehenderit aperiam, odit amet modi debitis praesentium minus quod error a magnam facere veniam libero, deserunt maxime?",
+		"source": "nueva Fuente C Corte Constitucional. Sentencia C-010 de 2013, M.P.: Luis Ernesto Vargas Silva. Ver Corte Constitucional. Sentencia C-068 de 2013, M.P.: Luis Guillermo Guerrero Pérez."
+	 },
+	 {
+		"descriptor": "descriptor D",
+		"year": 1945,
+		"subject": "Norma",
+		"definition": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur in quisquam eos iste reprehenderit aperiam, odit amet modi debitis praesentium minus quod error a magnam facere veniam libero, deserunt maxime?",
+		"source": " nueva Fuente D Corte Constitucional. Sentencia C-010 de 2013, M.P.: Luis Ernesto Vargas Silva. Ver Corte Constitucional. Sentencia C-068 de 2013, M.P.: Luis Guillermo Guerrero Pérez."
+	 }
+  ],
+	"created_by": "user 2"
 }
+### Crear una película con POST
+POST http://localhost:3000/terms
+Content-Type: application/json
+
+{
+  "meanings": [
+	 {
+		"descriptor": "descriptor C",
+		"year": 1944,
+		"subject": "Sentencia",
+		"definition": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur in quisquam eos iste reprehenderit aperiam, odit amet modi debitis praesentium minus quod error a magnam facere veniam libero, deserunt maxime?",
+		"source": "nueva Fuente C Corte Constitucional. Sentencia C-010 de 2013, M.P.: Luis Ernesto Vargas Silva. Ver Corte Constitucional. Sentencia C-068 de 2013, M.P.: Luis Guillermo Guerrero Pérez."
+	 },
+	 {
+		"descriptor": "descriptor D",
+		"year": 1945,
+		"subject": "Norma",
+		"definition": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur in quisquam eos iste reprehenderit aperiam, odit amet modi debitis praesentium minus quod error a magnam facere veniam libero, deserunt maxime?",
+		"source": " nueva Fuente D Corte Constitucional. Sentencia C-010 de 2013, M.P.: Luis Ernesto Vargas Silva. Ver Corte Constitucional. Sentencia C-068 de 2013, M.P.: Luis Guillermo Guerrero Pérez."
+	 }
+  ]
+}
+
 
 ### Recuperar todas las películas
 GET http://localhost:3000/users

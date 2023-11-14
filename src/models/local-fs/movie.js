@@ -12,11 +12,10 @@ export class MovieModel {
 	};
 
 	async getAll ({ genre }) {
-		if (genre) {
+		if (genre)
 			return movies.filter((movie) =>
 				movie.genre.some((g) => g.toLowerCase() === genre.toLowerCase())
 			);
-		}
 
 		return movies;
 	}

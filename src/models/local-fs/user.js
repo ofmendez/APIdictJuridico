@@ -12,11 +12,10 @@ export class UserModel {
 	};
 
 	async getAll ({ role }) {
-		if (role) {
+		if (role)
 			return users.filter((user) =>
 				user.role.toLowerCase() === role.toLowerCase()
 			);
-		}
 
 		return users;
 	}

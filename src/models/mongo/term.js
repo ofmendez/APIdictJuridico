@@ -1,8 +1,8 @@
-import { MongoClient, ObjectId } from 'mongodb';
+import { MongoClient } from 'mongodb';
 import { randomUUID } from 'node:crypto';
 
-// const uri = `mongodb+srv://ofmendez:${process.env.ATLAS_PASS}@cluster0.bss36fz.mongodb.net/?retryWrites=true&w=majority`;
-const uri = 'mongodb://localhost:27017';
+const uri = `mongodb+srv://ofmendez:${process.env.ATLAS_PASS}@cluster0.bss36fz.mongodb.net/?retryWrites=true&w=majority`;
+// const uri = 'mongodb://localhost:27017';
 // const uri = `mongodb://myUserAdmin:${process.env.LINODE_PASS}@172-233-187-25.ip.linodeusercontent.com:27017/?authMechanism=DEFAULT`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -12,7 +12,7 @@ async function connect () {
 	try {
 		await client.connect();
 		const database = client.db('dictionary');
-		return database.collection('users');
+		return database.collection('terms');
 	} catch (error) {
 		console.error('Error connecting to the database');
 		console.error(error);
@@ -20,9 +20,9 @@ async function connect () {
 	}
 }
 
-export class UserModel {
+export class TermModel {
 	constructor () {
-		console.log('->Mongol UserModel');
+		console.log('->Mongo UserModel');
 	};
 
 	setEnv (env) {
@@ -47,14 +47,13 @@ export class UserModel {
 
 	async getById ({ id }) {
 		const db = await connect();
-		const objectId = new ObjectId(id);
-		return db.findOne({ _id: objectId });
+		// const objectId = new UUID(id);
+		return db.findOne({ _id: id });
 	}
 
 	async create ({ input }) {
 		const db = await connect();
 		input._id = randomUUID();
-
 		const { insertedId } = await db.insertOne(input);
 
 		return {
@@ -65,16 +64,16 @@ export class UserModel {
 
 	async delete ({ id }) {
 		const db = await connect();
-		const objectId = new ObjectId(id);
-		const { deletedCount } = await db.deleteOne({ _id: objectId });
+		// const objectId = new ObjectId(id);
+		const { deletedCount } = await db.deleteOne({ _id: id });
 		return deletedCount > 0;
 	}
 
 	async update ({ id, input }) {
 		const db = await connect();
-		const objectId = new ObjectId(id);
+		// const objectId = new ObjectId(id);
 
-		const { ok, value } = await db.findOneAndUpdate({ _id: objectId }, { $set: input }, { returnNewDocument: true });
+		const { ok, value } = await db.findOneAndUpdate({ _id: id }, { $set: input }, { returnNewDocument: true });
 
 		if (!ok) return false;
 
