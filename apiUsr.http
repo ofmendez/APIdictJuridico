@@ -52,7 +52,7 @@ Content-Type: application/json
 	 {
 		"descriptor": "descriptor C",
 		"year": 1944,
-		"subject": "Sentencia",
+		"subject": "Doctrina",
 		"definition": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur in quisquam eos iste reprehenderit aperiam, odit amet modi debitis praesentium minus quod error a magnam facere veniam libero, deserunt maxime?",
 		"source": "nueva Fuente C Corte Constitucional. Sentencia C-010 de 2013, M.P.: Luis Ernesto Vargas Silva. Ver Corte Constitucional. Sentencia C-068 de 2013, M.P.: Luis Guillermo Guerrero Pérez."
 	 },
@@ -75,7 +75,7 @@ Content-Type: application/json
 	 {
 		"descriptor": "descriptor C",
 		"year": 1944,
-		"subject": "Sentencia",
+		"subject": "Doctrina",
 		"definition": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur in quisquam eos iste reprehenderit aperiam, odit amet modi debitis praesentium minus quod error a magnam facere veniam libero, deserunt maxime?",
 		"source": "nueva Fuente C Corte Constitucional. Sentencia C-010 de 2013, M.P.: Luis Ernesto Vargas Silva. Ver Corte Constitucional. Sentencia C-068 de 2013, M.P.: Luis Guillermo Guerrero Pérez."
 	 },

@@ -12,10 +12,10 @@ const termSchema = z.object({
 			}),
 			year: z.number().int().min(1900).max(2100),
 			subject: z.string(
-				z.enum(['Jurisprudencia', 'Sentencia', 'Norma']),
+				z.enum(['Jurisprudencia', 'Doctrina', 'Norma']),
 				{
 					required_error: 'La materia es requerida.',
-					invalid_type_error: 'La materia debe ser Jurisprudencia, Sentencia o Norma.'
+					invalid_type_error: 'La materia debe ser Jurisprudencia, Doctrina o Norma.'
 				}
 			),
 			definition: z.string().min(2, {
