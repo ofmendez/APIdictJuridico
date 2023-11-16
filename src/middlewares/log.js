@@ -3,6 +3,6 @@ function timeout (ms) {
 }
 export const logMiddleware = async (c, next) => {
 	console.log(`[${c.req.method}] ${c.req.url} <------`);
-	await timeout(300);
+	await timeout(550);
 	await next();
 };

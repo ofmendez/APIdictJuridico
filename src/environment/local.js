@@ -1,10 +1,13 @@
 import createApp from '../index.jsx';
 
-import { MovieModel } from '../models/local-fs/movie.js';
-import { UserModel } from '../models/local-fs/user.js';
+import { MovieModel } from '../models/local-mongo/movie.js';
+import { UserModel } from '../models/local-mongo/user.js';
+import { TermModel } from '../models/local-mongo/term.js';
 
 const userModel = new UserModel();
 const movieModel = new MovieModel();
-const models = { userModel, movieModel };
+const termModel = new TermModel();
+
+const models = { userModel, movieModel, termModel };
 
 export default createApp({ models });

@@ -47,10 +47,11 @@ export class TermController {
 
 	update = async (c) => {
 		const body = await c.req.json();
+		body.updated_at = new Date();
 		const result = validatePartialTerm(body);
 
 		if (!result.success)
-			return c.json({ error: JSON.parse(result.error.message) }, 400);
+			return c.json({ error: JSON.parse(result.error.message) }, 422);
 
 		const { id } = c.req.param();
 

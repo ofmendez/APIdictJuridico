@@ -2,10 +2,8 @@ import { MongoClient } from 'mongodb';
 import { randomUUID } from 'node:crypto';
 
 const uri = `mongodb+srv://ofmendez:${process.env.ATLAS_PASS}@cluster0.bss36fz.mongodb.net/?retryWrites=true&w=majority`;
-// const uri = 'mongodb://localhost:27017';
 // const uri = `mongodb://myUserAdmin:${process.env.LINODE_PASS}@172-233-187-25.ip.linodeusercontent.com:27017/?authMechanism=DEFAULT`;
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri);
 
 async function connect () {

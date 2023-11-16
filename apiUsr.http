@@ -1,8 +1,14 @@
 
+@token = xxxxxxx
+
 ### Recuperar ruta de la API
 GET http://localhost:3000/
 ### Recuperar todas las películas
 GET http://localhost:3000/terms
+
+### Recuperar todas las películas
+GET http://localhost:3000/terms/adads
+Authorization: Bearer {{token}}
 
 ### Recuperar login
 GET http://localhost:3000/login

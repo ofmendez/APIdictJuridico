@@ -1,7 +1,7 @@
 import { MongoClient } from 'mongodb';
 import { randomUUID } from 'node:crypto';
 
-const uri = `mongodb+srv://ofmendez:${process.env.ATLAS_PASS}@cluster0.bss36fz.mongodb.net/?retryWrites=true&w=majority`;
+const uri = 'mongodb://localhost:27017';
 // const uri = `mongodb://myUserAdmin:${process.env.LINODE_PASS}@172-233-187-25.ip.linodeusercontent.com:27017/?authMechanism=DEFAULT`;
 
 const client = new MongoClient(uri);
@@ -10,7 +10,7 @@ async function connect () {
 	try {
 		await client.connect();
 		const database = client.db('dictionary');
-		return database.collection('movies');
+		return database.collection('terms');
 	} catch (error) {
 		console.error('Error connecting to the database');
 		console.error(error);
@@ -18,9 +18,9 @@ async function connect () {
 	}
 }
 
-export class MovieModel {
+export class TermModel {
 	constructor () {
-		console.log('->Mongo MovieModel');
+		console.log('->Mongo UserModel');
 	};
 
 	setEnv (env) {
@@ -45,14 +45,13 @@ export class MovieModel {
 
 	async getById ({ id }) {
 		const db = await connect();
-		// const objectId = new ObjectId(id);
+		// const objectId = new UUID(id);
 		return db.findOne({ _id: id });
 	}
 
 	async create ({ input }) {
 		const db = await connect();
 		input._id = randomUUID();
-
 		const { insertedId } = await db.insertOne(input);
 
 		return {
