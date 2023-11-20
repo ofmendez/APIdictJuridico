@@ -1,8 +1,4 @@
-import { UserController } from '../controllers/users.js';
-
-export const createUserRouter = ({ route, model }) => {
-	const userController = new UserController({ model });
-
+export const createUserRouter = ({ route, userController }) => {
 	route.get('/', userController.getAll);
 	route.post('/', userController.create);
 

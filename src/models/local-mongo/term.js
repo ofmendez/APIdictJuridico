@@ -60,13 +60,6 @@ export class TermModel {
 		};
 	}
 
-	async delete ({ id }) {
-		const db = await connect();
-		// const objectId = new ObjectId(id);
-		const { deletedCount } = await db.deleteOne({ _id: id });
-		return deletedCount > 0;
-	}
-
 	async update ({ id, input }) {
 		const db = await connect();
 		// const objectId = new ObjectId(id);
@@ -76,5 +69,12 @@ export class TermModel {
 		if (!ok) return false;
 
 		return value;
+	}
+
+	async delete ({ id }) {
+		const db = await connect();
+		// const objectId = new ObjectId(id);
+		const { deletedCount } = await db.deleteOne({ _id: id });
+		return deletedCount > 0;
 	}
 }

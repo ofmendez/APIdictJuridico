@@ -32,6 +32,9 @@ const termSchema = z.object({
 	updated_at: z.date().optional(),
 	created_by: z.string().min(2, {
 		message: 'El usuario debe tener al menos 2 caracteres'
+	}),
+	updated_by: z.string().min(2, {
+		message: 'El usuario debe tener al menos 2 caracteres'
 	})
 
 });

@@ -35,16 +35,6 @@ export class TermController {
 		return c.json(newTerm, 201);
 	};
 
-	delete = async (c) => {
-		const { id } = c.req.param();
-		const result = await this.termModel.delete({ id });
-
-		if (result === false)
-			return c.json({ message: 'Term not found' }, 404);
-
-		return c.json({ message: 'Term deleted' });
-	};
-
 	update = async (c) => {
 		const body = await c.req.json();
 		body.updated_at = new Date();
@@ -58,5 +48,15 @@ export class TermController {
 		const updatedTerm = await this.termModel.update({ id, input: result.data });
 
 		return c.json(updatedTerm);
+	};
+
+	delete = async (c) => {
+		const { id } = c.req.param();
+		const result = await this.termModel.delete({ id });
+
+		if (result === false)
+			return c.json({ message: 'Term not found' }, 404);
+
+		return c.json({ message: 'Term deleted' });
 	};
 }

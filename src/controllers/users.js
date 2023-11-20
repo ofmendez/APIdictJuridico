@@ -1,4 +1,5 @@
 import { validateUser, validatePartialUser } from '../schemas/users.js';
+import { scryptSync, randomBytes } from 'node:crypto';
 
 export class UserController {
 	constructor ({ model }) {
@@ -12,6 +13,11 @@ export class UserController {
 		return c.json(users);
 	};
 
+	getAllRaw = async (c) => {
+		const users = await this.userModel.getAll({});
+		return users;
+	};
+
 	getById = async (c) => {
 		const { id } = c.req.param();
 		const user = await this.userModel.getById({ id });
@@ -20,14 +26,22 @@ export class UserController {
 	};
 
 	create = async (c) => {
+		console.log('--------->>>> model: ', this.userModel);
 		const body = await c.req.json();
-		console.log('create', body);
 		const result = validateUser(body);
 
 		if (!result.success)
 			return c.json({ error: 'unprocessable', message: JSON.parse(result.error.message) }, 422);
-			// return c.json({ error: "unprocessable" }, 400);// 422 Unprocessable Entity
+		// return c.json({ error: "unprocessable" }, 400);// 422 Unprocessable Entity
 
+		const salt = randomBytes(16).toString('hex');
+		const hash = scryptSync(result.data.password + process.env.OFPEPE, salt, 64).toString('hex');
+		result.data.email = result.data.email.toLowerCase();
+		result.data.password = hash;
+		result.data.salt = salt;
+
+		console.log('PEPE : ', process.env.OFPEPE);
+		console.log('created r d: ', result.data);
 		const newUser = await this.userModel.create({ input: result.data });
 
 		return c.json(newUser, 201);

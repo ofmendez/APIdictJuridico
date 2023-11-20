@@ -7,6 +7,7 @@ import { createMovieRouter } from './routes/movies.js';
 import { createTermRouter } from './routes/terms.js';
 import { logMiddleware } from './middlewares/log.js';
 import { handleLogin } from './helpers/Auth.js';
+import { UserController } from './controllers/users.js';
 
 // /*global   */
 const createApp = ({ models }) => {
@@ -15,11 +16,12 @@ const createApp = ({ models }) => {
 	app.use('*', logMiddleware);
 	app.use('*', corsMiddleware());
 	app.get('/', (c) => { return c.json({ healt: c.env.HEALTH || process.env.HEALTH }); });
-	app.get('/login', handleLogin);
+	const userController = new UserController({ model: models.userModel });
+	app.get('/login', (c) => handleLogin({ c, userController }));
 
 	app.use('*', bearerAuth({ token: `${process.env.TOKEN}` }));
 	app.use('*', prettyJSON());
-	createUserRouter({ route: app.route('/users'), model: models.userModel });
+	createUserRouter({ route: app.route('/users'), userController });
 	createMovieRouter({ route: app.route('/movies'), model: models.movieModel });
 	createTermRouter({ route: app.route('/terms'), model: models.termModel });
 

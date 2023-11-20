@@ -1,5 +1,5 @@
 
-@token = xxxxxxx
+@token = xxxxxx
 
 ### Recuperar ruta de la API
 GET http://localhost:3000/
@@ -20,8 +20,11 @@ GET http://localhost:3000/login
 
 ### Recuperar login
 GET http://localhost:3000/login?email=pepe%40gmail.com&password=1234
+Authorization: Bearer {{token}}
+
 ### Recuperar login
-GET http://localhost:3000/login?email=ofmendez%40gmail.com&password=321321321
+GET http://localhost:3000/login?email=margarita.ricaurte%40ricaurteruedaabogados.com&password=DiccionarioExplore123
+Authorization: Bearer {{token}}
 
 ### Recuperar todas las películas por título
 GET http://localhost:3000/movies
