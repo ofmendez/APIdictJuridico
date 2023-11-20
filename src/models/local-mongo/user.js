@@ -1,4 +1,4 @@
-import { MongoClient, ObjectId } from 'mongodb';
+import { MongoClient } from 'mongodb';
 import { randomUUID } from 'node:crypto';
 
 const uri = 'mongodb://localhost:27017';

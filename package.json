@@ -12,15 +12,15 @@
     "devw": "wrangler dev ./src/environment/prod.js"
   },
   "dependencies": {
-    "hono": "3.9.2",
-    "mongodb": "5.9.1",
-    "zod": "3.21.4"
+    "hono": "3.10.1",
+    "mongodb": "6.3.0",
+    "zod": "3.22.4"
   },
   "devDependencies": {
-    "esbuild": "0.13.5",
-    "eslint": "^8.45.0",
+    "esbuild": "^0.19.6",
+    "eslint": "^8.54.0",
     "standard": "^17.1.0",
-    "vite": "^4.5.0"
+    "vite": "^5.0.0"
   },
   "eslintConfig": {
     "extends": "./node_modules/standard/eslintrc.json",
