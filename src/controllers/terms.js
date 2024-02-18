@@ -22,8 +22,10 @@ export class TermController {
 		else {
 			const { role } = c.req.query();
 			const terms = await this.termModel.getAll({ role });
-			if (this.redisAviable)
-				this.redisClient.set('terms', JSON.stringify(terms), 'EX', 60);
+			if (this.redisAviable) {
+				await this.redisClient.set('terms', JSON.stringify(terms));
+				await this.redisClient.expire('terms', 120);
+			}
 			return c.json(terms);
 		}
 	};
@@ -35,8 +37,10 @@ export class TermController {
 			return c.json(JSON.parse(cachedTerm));
 		else {
 			const term = await this.termModel.getById({ id });
-			if (this.redisAviable)
-				this.redisClient.set(`term/${id}`, JSON.stringify(term), 'EX', 60);
+			if (this.redisAviable) {
+				await this.redisClient.set(`term/${id}`, JSON.stringify(term));
+				await this.redisClient.expire(`term/${id}`, 120);
+			}
 			if (term) return c.json(term);
 			return c.json({ message: 'Term not found w', id }, 404);
 		}
@@ -150,8 +154,10 @@ export class TermController {
 			};
 			term.push(stage5);
 			const result = await this.termModel.search({ term });
-			if (this.redisAviable)
-				this.redisClient.set(queryCached, JSON.stringify(result), 'EX', 120);
+			if (this.redisAviable) {
+				await this.redisClient.set(queryCached, JSON.stringify(result));
+				await this.redisClient.expire(queryCached, 120);
+			}
 			return c.json(result);
 		}
 	};
