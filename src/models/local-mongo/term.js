@@ -77,4 +77,16 @@ export class TermModel {
 		const { deletedCount } = await db.deleteOne({ _id: id });
 		return deletedCount > 0;
 	}
+
+	async search ({ term }) {
+		const db = await connect();
+		// return db.find({ $text: { $search: term } }).toArray();
+		const cursor = db.aggregate(term);
+		const result = await cursor.toArray();
+		await client.close();
+		return {
+			term,
+			result
+		};
+	}
 }

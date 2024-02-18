@@ -1,8 +1,8 @@
+// const uri = `mongodb://myUserAdmin:${process.env.LINODE_PASS}@172-233-187-25.ip.linodeusercontent.com:27017/?authMechanism=DEFAULT`;
 import { MongoClient } from 'mongodb';
 import { randomUUID } from 'node:crypto';
 
 const uri = `mongodb+srv://ofmendez:${process.env.ATLAS_PASS}@cluster0.bss36fz.mongodb.net/?retryWrites=true&w=majority`;
-// const uri = `mongodb://myUserAdmin:${process.env.LINODE_PASS}@172-233-187-25.ip.linodeusercontent.com:27017/?authMechanism=DEFAULT`;
 
 const client = new MongoClient(uri);
 
@@ -76,5 +76,17 @@ export class TermModel {
 		// const objectId = new ObjectId(id);
 		const { deletedCount } = await db.deleteOne({ _id: id });
 		return deletedCount > 0;
+	}
+
+	async search ({ term }) {
+		const db = await connect();
+		// return db.find({ $text: { $search: term } }).toArray();
+		const cursor = db.aggregate(term);
+		const result = await cursor.toArray();
+		await client.close();
+		return {
+			term,
+			result
+		};
 	}
 }

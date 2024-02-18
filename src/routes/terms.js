@@ -6,6 +6,8 @@ export const createTermRouter = ({ route, model }) => {
 	route.get('/', termController.getAll);
 	route.post('/', termController.create);
 
+	route.post('/search', termController.search);
+
 	route.get('/:id', termController.getById);
 	route.delete('/:id', termController.delete);
 	route.patch('/:id', termController.update);
