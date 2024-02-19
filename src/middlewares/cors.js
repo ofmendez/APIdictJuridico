@@ -1,15 +1,21 @@
 import { cors } from 'hono/cors';
 
-const ACCEPTED_ORIGINS = [
-	'http://localhost:3000',
-	'http://localhost:4173',
-	'http://localhost:5173',
-	'https://diccionarioexplore.com',
-	'*.diccionariojuridicoadmin.pages.dev'
+const ACCEPTED_ORIGINS = (o) => {
+	const result = ['http://localhost:5173'];
+	if (o.startsWith('http://localhost') || o.startsWith('https://diccionarioexplore.com') || o.endsWith('.diccionariojuridicoadmin.pages.dev')) {
+		result.push(o);
+		console.log(result);
+	}
+	return result;
+};
 
-];
-
-export const corsMiddleware = ({ acceptedOrigins = ACCEPTED_ORIGINS } = {}) =>
+export const corsMiddleware = () =>
 	cors({
-		origin: acceptedOrigins
+		origin: (o) => {
+			let result = 'http://localhost:5173';
+			if (o.startsWith('http://localhost') || o.startsWith('https://diccionarioexplore.com') || o.endsWith('.diccionariojuridicoadmin.pages.dev'))
+				result = o;
+
+			return result;
+		}
 	});
