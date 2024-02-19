@@ -4,7 +4,8 @@ const ACCEPTED_ORIGINS = [
 	'http://localhost:3000',
 	'http://localhost:4173',
 	'http://localhost:5173',
-	'https://diccionarioexplore.com'
+	'https://diccionarioexplore.com',
+	'*.diccionariojuridicoadmin.pages.dev'
 
 ];
 
