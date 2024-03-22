@@ -13,7 +13,7 @@ export const corsMiddleware = () =>
 	cors({
 		origin: (o) => {
 			let result = 'http://localhost:5173';
-			if (o.startsWith('http://localhost') || o.startsWith('https://diccionarioexplore.com') || o.endsWith('.diccionariojuridicoadmin.pages.dev'))
+			if (o.startsWith('http://localhost') || o.startsWith('https://diccionarioexplore.com') || o.endsWith('.diccionariojuridicoadmin.pages.dev') || o.endsWith('.diccionarioexplore.com'))
 				result = o;
 
 			return result;
