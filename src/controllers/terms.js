@@ -1,5 +1,6 @@
 /* eslint-disable no-dupe-keys */
 import { validateTerm, validatePartialTerm } from '../schemas/terms.js';
+import { convertArrayToCSV } from 'convert-array-to-csv';
 import redis from 'redis';
 
 export class TermController {
@@ -15,7 +16,7 @@ export class TermController {
 	}
 
 	getAll = async (c) => {
-		if (this.redisAviable) console.log('//////// redisAviable');
+		if (this.redisAviable) console.log('Cache!');
 		const cachedTerms = this.redisAviable ? await this.redisClient.get('terms') : null;
 		if (cachedTerms)
 			return c.json(JSON.parse(cachedTerms));
@@ -28,6 +29,29 @@ export class TermController {
 			}
 			return c.json(terms);
 		}
+	};
+
+	download = async (c) => {
+		if (this.redisAviable) console.log('Cache!');
+		let result = '';
+		// const cachedTerms = this.redisAviable ? await this.redisClient.get('downloadTerms') : null;
+		const cachedTerms = null;
+		if (cachedTerms)
+			result = JSON.parse(cachedTerms);
+		else {
+			const terms = await this.termModel.download();
+			result = convertArrayToCSV(terms);
+			if (this.redisAviable) {
+				await this.redisClient.set('downloadTerms', JSON.stringify(result));
+				await this.redisClient.expire('downloadTerms', 120);
+			}
+		}
+		return c.text(result, {
+			headers: {
+				'Content-Type': 'text/csv',
+				'Content-Disposition': 'attachment; filename=Términos.csv'
+			}
+		});
 	};
 
 	getById = async (c) => {
@@ -55,7 +79,7 @@ export class TermController {
 
 		if (!result.success)
 			return c.json({ error: 'unprocessable', message: JSON.parse(result.error.message) }, 422);
-			// return c.json({ error: "unprocessable" }, 400);// 422 Unprocessable Entity
+		// return c.json({ error: "unprocessable" }, 400);// 422 Unprocessable Entity
 
 		const newTerm = await this.termModel.create({ input: result.data });
 
@@ -104,7 +128,7 @@ export class TermController {
 			const subjectArray = subjects.split(',');
 			const term = [];
 			// Stage 0: Apply Atlas Search with highlighting
-			const stage0 =	{
+			const stage0 = {
 				$search: {
 					index: 'default', // Replace with your index name
 					text: {
@@ -129,7 +153,7 @@ export class TermController {
 			term.push(stage1);
 			// Stage 2: Filter by desired subject
 
-			const stage2 =		{
+			const stage2 = {
 				$match: { 'meanings.subject': { $in: subjectArray } }
 			};
 			if (subjectArray[0] !== '' && body.subject) term.push(stage2);

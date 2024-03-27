@@ -12,10 +12,11 @@
     "devw": "wrangler dev ./src/environment/prod.js"
   },
   "dependencies": {
+    "convert-array-to-csv": "2.0.0",
     "hono": "3.10.1",
     "mongodb": "6.3.0",
-    "zod": "3.22.4",
-	 "redis": "4.6.13"
+    "redis": "4.6.13",
+    "zod": "3.22.4"
   },
   "devDependencies": {
     "esbuild": "^0.19.6",

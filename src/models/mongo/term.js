@@ -43,6 +43,11 @@ export class TermModel {
 		return db.find({}).toArray();
 	}
 
+	async download () {
+		const db = await connect();
+		return db.find({}).toArray();
+	}
+
 	async getById ({ id }) {
 		const db = await connect();
 		// const objectId = new UUID(id);
