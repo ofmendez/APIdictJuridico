@@ -39,59 +39,81 @@ export class TermModel {
 					}
 				}
 			}).toArray();
-
-		return db.find({}).toArray();
+		try {
+			return await db.find({}).toArray();
+		} finally {
+			await client.close();
+		}
 	}
 
 	async download () {
 		const db = await connect();
-		return db.find({}).toArray();
+		try {
+			return await db.find({}).toArray();
+		} finally {
+			await client.close();
+		}
 	}
 
 	async getById ({ id }) {
 		const db = await connect();
 		// const objectId = new UUID(id);
-		return db.findOne({ _id: id });
+		try {
+			return await db.findOne({ _id: id });
+		} finally {
+			await client.close();
+		}
 	}
 
 	async create ({ input }) {
 		const db = await connect();
 		input._id = randomUUID();
-		const { insertedId } = await db.insertOne(input);
-
-		return {
-			id: insertedId,
-			...input
-		};
+		try {
+			const { insertedId } = await db.insertOne(input);
+			return {
+				id: insertedId,
+				...input
+			};
+		} finally {
+			await client.close();
+		}
 	}
 
 	async update ({ id, input }) {
 		const db = await connect();
 		// const objectId = new ObjectId(id);
-
-		const { ok, value } = await db.findOneAndUpdate({ _id: id }, { $set: input }, { returnNewDocument: true });
-
-		if (!ok) return false;
-
-		return value;
+		try {
+			const { ok, value } = await db.findOneAndUpdate({ _id: id }, { $set: input }, { returnNewDocument: true });
+			if (!ok) return false;
+			return value;
+		} finally {
+			await client.close();
+		}
 	}
 
 	async delete ({ id }) {
 		const db = await connect();
 		// const objectId = new ObjectId(id);
-		const { deletedCount } = await db.deleteOne({ _id: id });
-		return deletedCount > 0;
+		try {
+			const { deletedCount } = await db.deleteOne({ _id: id });
+			return deletedCount > 0;
+		} finally {
+			await client.close();
+		}
 	}
 
 	async search ({ term }) {
 		const db = await connect();
 		// return db.find({ $text: { $search: term } }).toArray();
 		const cursor = db.aggregate(term);
-		const result = await cursor.toArray();
-		await client.close();
-		return {
-			term,
-			result
-		};
+		try {
+			const result = await cursor.toArray();
+			return {
+				term,
+				result
+			};
+		} finally {
+			await client.close();
+		}
 	}
 }

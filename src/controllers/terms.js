@@ -119,6 +119,12 @@ export class TermController {
 		if (!body.q) return c.json({ message: 'No search query provided' }, 400);
 		const queryCached = encodeURIComponent(JSON.stringify(body));
 		const cachedResult = this.redisAviable ? await this.redisClient.get(queryCached) : null;
+
+		const quotedPhrases = body.q.match(/"([^"]+)"/g) || [];
+		const individualWords = body.q.split(/"([^"]+)"|\s+/).filter(Boolean);
+		console.log('quotedPhrases: ', quotedPhrases);
+		console.log('individualWords: ', individualWords);
+
 		if (cachedResult)
 			return c.json(JSON.parse(cachedResult));
 		else {
@@ -131,9 +137,19 @@ export class TermController {
 			const stage0 = {
 				$search: {
 					index: 'default', // Replace with your index name
-					text: {
-						query: `${body.q}`, // Replace <search term>
-						path: pathArray
+					compound: {
+						must: quotedPhrases.map(phrase => ({
+							phrase: {
+								query: phrase,
+								path: pathArray
+							}
+						})),
+						should: individualWords.map(word => ({
+							text: {
+								query: word,
+								path: pathArray
+							}
+						}))
 					},
 					highlight: {
 						path: pathArray
@@ -141,6 +157,18 @@ export class TermController {
 				}
 			};
 			term.push(stage0);
+			// const stage0 = {
+			// 	$search: {
+			// 		index: 'default', // Replace with your index name
+			// 		text: {
+			// 			query: `${body.q}`, // Replace <search term>
+			// 			path: pathArray
+			// 		},
+			// 		highlight: {
+			// 			path: pathArray
+			// 		}
+			// 	}
+			// };
 
 			const stage1 = {
 				$project: {
