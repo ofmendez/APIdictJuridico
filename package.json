@@ -1,8 +1,8 @@
 {
   "type": "module",
   "scripts": {
-    "dev": "bun --watch src/environment/local.js",
-    "dev:prod": "bun --watch src/environment/prod.js",
+    "dev:local": "bun --watch src/environment/local.js",
+    "dev": "bun --watch src/environment/prod.js",
     "build": "esbuild --bundle ./src/environment/prod.js --platform=node --format=esm --outfile=dist/_worker.js --minify",
     "pre": "npm run build && bun ./dist/_worker.js ",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
