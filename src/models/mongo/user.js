@@ -39,11 +39,11 @@ export class UserModel {
 					}
 				}
 			}).toArray();
-		try {
-			return db.find({}).toArray();
-		} finally {
-			await client.close();
-		}
+		// try {
+		return db.find({}).toArray();
+		// } finally {
+		// 	await client.close();
+		// }
 	}
 
 	async getById ({ id }) {
