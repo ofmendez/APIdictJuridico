@@ -67,6 +67,12 @@ export class TermController {
 		}
 	};
 
+	getRandom = async (c) => {
+		const term = await this.termModel.getRandom();
+		if (term) return c.json(term);
+		return c.json({ message: 'Term not generated' }, 404);
+	};
+
 	create = async (c) => {
 		const body = await c.req.json();
 		body.created_at = new Date();
@@ -84,6 +90,7 @@ export class TermController {
 	};
 
 	update = async (c) => {
+		this.redisClient.del('terms');
 		const body = await c.req.json();
 		body.updated_at = new Date();
 		const result = validatePartialTerm(body);
@@ -99,6 +106,7 @@ export class TermController {
 	};
 
 	delete = async (c) => {
+		this.redisClient.del('terms');
 		const { id } = c.req.param();
 		const result = await this.termModel.delete({ id });
 

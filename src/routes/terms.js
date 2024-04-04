@@ -8,6 +8,7 @@ export const createTermRouter = ({ route, model }) => {
 
 	route.get('/download', termController.download);
 	route.post('/search', termController.search);
+	route.get('/random', termController.getRandom);
 
 	route.get('/:id', termController.getById);
 	route.delete('/:id', termController.delete);

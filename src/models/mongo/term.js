@@ -50,6 +50,15 @@ export class TermModel {
 		}
 	}
 
+	async getRandom () {
+		const db = await this.connect(collectionName);
+		try {
+			return await db.aggregate([{ $sample: { size: 1 } }]).toArray();
+		} finally {
+			this.closeClient(); ;
+		}
+	}
+
 	async create ({ input }) {
 		const db = await this.connect(collectionName);
 		input._id = randomUUID();

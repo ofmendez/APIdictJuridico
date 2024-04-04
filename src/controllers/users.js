@@ -72,6 +72,7 @@ export class UserController {
 	};
 
 	delete = async (c) => {
+		this.redisClient.del('users');
 		const { id } = c.req.param();
 		const result = await this.userModel.delete({ id });
 
@@ -82,6 +83,7 @@ export class UserController {
 	};
 
 	update = async (c) => {
+		this.redisClient.del('users');
 		const body = await c.req.json();
 		const result = validatePartialUser(body);
 
