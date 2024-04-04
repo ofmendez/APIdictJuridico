@@ -50,6 +50,7 @@ export class UserController {
 	};
 
 	create = async (c) => {
+		this.redisClient.del('users');
 		console.log('--------->>>> model: ', this.userModel);
 		const body = await c.req.json();
 		const result = validateUser(body);

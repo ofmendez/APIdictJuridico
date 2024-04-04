@@ -74,6 +74,7 @@ export class TermController {
 	};
 
 	create = async (c) => {
+		this.redisClient.del('terms');
 		const body = await c.req.json();
 		body.created_at = new Date();
 		body.updated_at = new Date();
@@ -82,10 +83,8 @@ export class TermController {
 
 		if (!result.success)
 			return c.json({ error: 'unprocessable', message: JSON.parse(result.error.message) }, 422);
-		// return c.json({ error: "unprocessable" }, 400);// 422 Unprocessable Entity
 
 		const newTerm = await this.termModel.create({ input: result.data });
-
 		return c.json(newTerm, 201);
 	};
 
@@ -99,9 +98,7 @@ export class TermController {
 			return c.json({ error: JSON.parse(result.error.message) }, 422);
 
 		const { id } = c.req.param();
-
 		const updatedTerm = await this.termModel.update({ id, input: result.data });
-
 		return c.json(updatedTerm);
 	};
 
@@ -162,18 +159,6 @@ export class TermController {
 				}
 			};
 			term.push(stage0);
-			// const stage0 = {
-			// 	$search: {
-			// 		index: 'default', // Replace with your index name
-			// 		text: {
-			// 			query: `${body.q}`, // Replace <search term>
-			// 			path: pathArray
-			// 		},
-			// 		highlight: {
-			// 			path: pathArray
-			// 		}
-			// 	}
-			// };
 
 			const stage1 = {
 				$project: {
