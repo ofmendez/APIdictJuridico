@@ -8,10 +8,12 @@ import { createTermRouter } from './routes/terms.js';
 import { logMiddleware } from './middlewares/log.js';
 import { handleLogin } from './helpers/Auth.js';
 import { UserController } from './controllers/users.js';
+import { connect, closeClient } from './controllers/mongoClient.js';
 
 // /*global   */
 const createApp = ({ models }) => {
 	const app = new Hono();
+	Object.values(models).forEach((model) => model.setEnv(connect, closeClient));
 
 	app.use('*', logMiddleware);
 	app.use('*', corsMiddleware());

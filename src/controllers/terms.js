@@ -5,9 +5,8 @@ import redis from 'redis';
 
 export class TermController {
 	constructor ({ model }) {
-		this.redisClient = redis.createClient();
 		this.termModel = model;
-		console.log('TermController', typeof this.termModel);
+		this.redisClient = redis.createClient();
 		this.redisAviable = false;
 		this.redisClient.connect();
 		this.redisClient.on('connect', () => {
@@ -16,7 +15,6 @@ export class TermController {
 	}
 
 	getAll = async (c) => {
-		if (this.redisAviable) console.log('Cache!');
 		const cachedTerms = this.redisAviable ? await this.redisClient.get('terms') : null;
 		if (cachedTerms)
 			return c.json(JSON.parse(cachedTerms));
@@ -32,10 +30,9 @@ export class TermController {
 	};
 
 	download = async (c) => {
-		if (this.redisAviable) console.log('Cache!');
 		let result = '';
-		// const cachedTerms = this.redisAviable ? await this.redisClient.get('downloadTerms') : null;
-		const cachedTerms = null;
+		const cachedTerms = this.redisAviable ? await this.redisClient.get('downloadTerms') : null;
+		// const cachedTerms = null;
 		if (cachedTerms)
 			result = JSON.parse(cachedTerms);
 		else {

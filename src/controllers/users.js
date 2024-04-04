@@ -1,21 +1,45 @@
 import { validateUser, validatePartialUser } from '../schemas/users.js';
 import { scryptSync, randomBytes } from 'node:crypto';
+import redis from 'redis';
 
 export class UserController {
 	constructor ({ model }) {
 		this.userModel = model;
-		console.log('UserController', typeof this.userModel);
+		this.redisClient = redis.createClient();
+		this.redisAviable = false;
+		this.redisClient.connect();
+		this.redisClient.on('connect', () => {
+			this.redisAviable = true;
+		});
 	}
 
 	getAll = async (c) => {
-		const { role } = c.req.query();
-		const users = await this.userModel.getAll({ role });
-		return c.json(users);
+		const cachedUsers = this.redisAviable ? await this.redisClient.get('users') : null;
+		if (cachedUsers)
+			return c.json(JSON.parse(cachedUsers));
+		else {
+			const { role } = c.req.query();
+			const users = await this.userModel.getAll({ role });
+			if (this.redisAviable) {
+				await this.redisClient.set('users', JSON.stringify(users));
+				await this.redisClient.expire('users', 120);
+			}
+			return c.json(users);
+		}
 	};
 
 	getAllRaw = async (c) => {
-		const users = await this.userModel.getAll({});
-		return users;
+		const cachedUsers = this.redisAviable ? await this.redisClient.get('users') : null;
+		if (cachedUsers)
+			return JSON.parse(cachedUsers);
+		else {
+			const users = await this.userModel.getAll({});
+			if (this.redisAviable) {
+				await this.redisClient.set('users', JSON.stringify(users));
+				await this.redisClient.expire('users', 120);
+			}
+			return users;
+		}
 	};
 
 	getById = async (c) => {

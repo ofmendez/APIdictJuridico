@@ -23,8 +23,9 @@ export class MovieModel {
 		console.log('->Mongo MovieModel');
 	};
 
-	setEnv (env) {
-		this.env = env;
+	setEnv (connect, closeClient) {
+		this.connect = connect;
+		this.closeClient = closeClient;
 	};
 
 	async getAll ({ genre }) {
