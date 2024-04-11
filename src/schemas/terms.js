@@ -10,7 +10,7 @@ const termSchema = z.object({
 			descriptor: z.string().min(2, {
 				message: 'El descriptor debe tener al menos 2 caracteres'
 			}),
-			year: z.number().int().min(1900).max(2100),
+			year: z.number().int().min(1800).max(2150),
 			subject: z.string(
 				z.enum(['Jurisprudencia', 'Doctrina', 'Norma']),
 				{
