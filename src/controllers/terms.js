@@ -135,24 +135,33 @@ export class TermController {
 			const pathArray = paths.split(',');
 			const subjectArray = subjects.split(',');
 			const term = [];
+			let theCompound = {};
+			if (quotedPhrases.length > 0) {
+				const compound = {
+					must: quotedPhrases.map(phrase => ({
+						phrase: {
+							query: phrase,
+							path: pathArray
+						}
+					}))
+				};
+				theCompound = compound;
+			} else {
+				const compound = {
+					should: individualWords.map(word => ({
+						text: {
+							query: word,
+							path: pathArray
+						}
+					}))
+				};
+				theCompound = compound;
+			}
 			// Stage 0: Apply Atlas Search with highlighting
 			const stage0 = {
 				$search: {
 					index: 'default', // Replace with your index name
-					compound: {
-						must: quotedPhrases.map(phrase => ({
-							phrase: {
-								query: phrase,
-								path: pathArray
-							}
-						})),
-						should: individualWords.map(word => ({
-							text: {
-								query: word,
-								path: pathArray
-							}
-						}))
-					},
+					compound: theCompound,
 					highlight: {
 						path: pathArray
 					}
