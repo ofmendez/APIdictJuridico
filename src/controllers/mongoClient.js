@@ -1,37 +1,41 @@
 import { MongoClient } from 'mongodb';
 const uri = `mongodb+srv://ofmendez:${process.env.ATLAS_PASS}@cluster0.bss36fz.mongodb.net/?retryWrites=true&w=majority`;
 
-let client = null;
+// let clientUs = null;
+const clients = {
+	terms: null,
+	users: null
+};
 let connecting = false;
 
-async function getClient () {
+async function getClient (collectionName) {
 	try {
-		if (!client || (client && client?.topology?.s?.state !== 'connecting')) {
-			client = new MongoClient(uri);
-			client.on('error', console.error.bind(console, 'MongoDB connection error:'));
-			await client.connect();
+		if (!clients[collectionName] || (clients[collectionName] && clients[collectionName]?.topology?.s?.state !== 'connecting')) {
+			clients[collectionName] = new MongoClient(uri);
+			clients[collectionName].on('error', console.error.bind(console, 'MongoDB connection error:'));
+			await clients[collectionName].connect();
 		}
-		return client;
+		return await clients[collectionName];
 	} catch (error) {
 		console.error(`Failed to connect to the MongoDB server. Error: ${error}`);
 	}
 }
 
 async function connect (collectionName) {
-	let c = await getClient();
+	let c = await getClient(collectionName);
 	while (!c?.topology?.isConnected()) {
 		connecting = true;
 		await new Promise(resolve => setTimeout(resolve, 500));
 		c = await getClient();
 	}
 	connecting = false;
-	return c.db('dictionary').collection(collectionName);
+	return await c.db('dictionary').collection(collectionName);
 }
 
-async function closeClient () {
-	if (client && !connecting) {
-		await client.close();
-		client = null;
+async function closeClient (collectionName) {
+	if (clients[collectionName] && !connecting) {
+		await clients[collectionName].close();
+		clients[collectionName] = null;
 	}
 }
 

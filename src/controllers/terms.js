@@ -10,7 +10,7 @@ export class TermController {
 		this.redisAviable = false;
 		this.redisClient.connect();
 		this.redisClient.on('connect', () => {
-			this.redisAviable = true;
+			this.redisAviable = false;
 		});
 	}
 

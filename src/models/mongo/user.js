@@ -26,7 +26,7 @@ export class UserModel {
 		try {
 			return await db.find({}).toArray();
 		} finally {
-			this.closeClient();
+			this.closeClient(collectionName);
 		}
 	}
 
@@ -36,7 +36,7 @@ export class UserModel {
 		try {
 			return await db.findOne({ _id: id });
 		} finally {
-			this.closeClient(); ;
+			this.closeClient(collectionName); ;
 		}
 	}
 
@@ -50,7 +50,7 @@ export class UserModel {
 				...input
 			};
 		} finally {
-			this.closeClient();
+			this.closeClient(collectionName);
 		}
 	}
 
@@ -61,7 +61,7 @@ export class UserModel {
 			const { deletedCount } = await db.deleteOne({ _id: id });
 			return deletedCount > 0;
 		} finally {
-			this.closeClient();
+			this.closeClient(collectionName);
 		}
 	}
 
@@ -73,7 +73,7 @@ export class UserModel {
 			if (!ok) return false;
 			return value;
 		} finally {
-			this.closeClient();
+			this.closeClient(collectionName);
 		}
 	}
 }

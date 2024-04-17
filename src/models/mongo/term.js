@@ -27,7 +27,7 @@ export class TermModel {
 		try {
 			return await db.find({}).toArray();
 		} finally {
-			this.closeClient();
+			this.closeClient(collectionName);
 		}
 	}
 
@@ -36,7 +36,7 @@ export class TermModel {
 		try {
 			return await db.find({}).toArray();
 		} finally {
-			this.closeClient();
+			this.closeClient(collectionName);
 		}
 	}
 
@@ -46,7 +46,7 @@ export class TermModel {
 		try {
 			return await db.findOne({ _id: id });
 		} finally {
-			this.closeClient();
+			this.closeClient(collectionName);
 		}
 	}
 
@@ -55,7 +55,7 @@ export class TermModel {
 		try {
 			return await db.aggregate([{ $sample: { size: 1 } }]).toArray();
 		} finally {
-			this.closeClient(); ;
+			this.closeClient(collectionName); ;
 		}
 	}
 
@@ -69,7 +69,7 @@ export class TermModel {
 				...input
 			};
 		} finally {
-			this.closeClient();
+			this.closeClient(collectionName);
 		}
 	}
 
@@ -81,7 +81,7 @@ export class TermModel {
 			if (!ok) return false;
 			return value;
 		} finally {
-			this.closeClient();
+			this.closeClient(collectionName);
 		}
 	}
 
@@ -92,7 +92,7 @@ export class TermModel {
 			const { deletedCount } = await db.deleteOne({ _id: id });
 			return deletedCount > 0;
 		} finally {
-			this.closeClient();
+			this.closeClient(collectionName);
 		}
 	}
 
@@ -107,7 +107,7 @@ export class TermModel {
 				result
 			};
 		} finally {
-			this.closeClient();
+			this.closeClient(collectionName);
 		}
 	}
 }
