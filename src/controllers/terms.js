@@ -1,6 +1,5 @@
 /* eslint-disable no-dupe-keys */
 import { validateTerm, validatePartialTerm } from '../schemas/terms.js';
-import { convertArrayToCSV } from 'convert-array-to-csv';
 import redis from 'redis';
 
 export class TermController {
@@ -37,7 +36,17 @@ export class TermController {
 			result = JSON.parse(cachedTerms);
 		else {
 			const terms = await this.termModel.download();
-			result = convertArrayToCSV(terms);
+			terms.forEach((t, i) => {
+				result += `\n\n${i + 1}) ${t.term}\n\n`;
+				t.meanings.forEach((m, i) => {
+					result += `DESCRIPTOR: ${m.descriptor}\n`;
+					result += `AÑO: ${m.year}\n`;
+					result += `MATERIA: ${m.subject}\n`;
+					result += `${m.definition}\n`;
+					result += `FUENTE: ${m.source}\n\n`;
+				});
+			});
+			// result = convertArrayToCSV(terms);
 			if (this.redisAviable) {
 				await this.redisClient.set('downloadTerms', JSON.stringify(result));
 				await this.redisClient.expire('downloadTerms', 120);
@@ -45,7 +54,7 @@ export class TermController {
 		}
 		return c.text(result, {
 			headers: {
-				'Content-Type': 'text/csv',
+				'Content-Type': 'text/txt',
 				'Content-Disposition': 'attachment; filename=Términos.csv'
 			}
 		});

@@ -12,7 +12,6 @@
     "devw": "wrangler dev ./src/environment/prod.js"
   },
   "dependencies": {
-    "convert-array-to-csv": "2.0.0",
     "hono": "3.10.1",
     "mongodb": "6.3.0",
     "redis": "4.6.13",
