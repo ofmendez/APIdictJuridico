@@ -1,6 +1,7 @@
 /* eslint-disable no-dupe-keys */
 import { validateTerm, validatePartialTerm } from '../schemas/terms.js';
 import redis from 'redis';
+import { randomUUID } from 'node:crypto';
 
 export class TermController {
 	constructor ({ model }) {
@@ -19,6 +20,7 @@ export class TermController {
 			return c.json(JSON.parse(cachedTerms));
 		else {
 			const { role } = c.req.query();
+			// this.termModel.setMeaningIds();
 			const terms = await this.termModel.getAll({ role });
 			if (this.redisAviable) {
 				await this.redisClient.set('terms', JSON.stringify(terms));
@@ -87,9 +89,12 @@ export class TermController {
 		const body = await c.req.json();
 		body.created_at = new Date();
 		body.updated_at = new Date();
-		console.log('create', body);
+		body.meanings.forEach((m) => {
+			m._id = randomUUID();
+		});
 		const result = validateTerm(body);
 
+		console.log('create', body);
 		if (!result.success)
 			return c.json({ error: 'unprocessable', message: JSON.parse(result.error.message) }, 422);
 

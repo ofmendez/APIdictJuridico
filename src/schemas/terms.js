@@ -23,6 +23,9 @@ const termSchema = z.object({
 			}),
 			source: z.string().min(2, {
 				message: 'La fuente debe tener al menos 2 caracteres'
+			}),
+			_id: z.string().min(2, {
+				message: 'El id debe tener al menos 2 caracteres'
 			})
 		})
 	).min(1, {
