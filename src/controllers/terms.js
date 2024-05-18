@@ -106,8 +106,11 @@ export class TermController {
 		this.redisClient.del('terms');
 		const body = await c.req.json();
 		body.updated_at = new Date();
+		body.meanings.forEach((m) => {
+			if (!m._id)
+				m._id = randomUUID();
+		});
 		const result = validatePartialTerm(body);
-
 		if (!result.success)
 			return c.json({ error: JSON.parse(result.error.message) }, 422);
 
