@@ -180,16 +180,22 @@ export class TermController {
 					index: 'default', // Replace with your index name
 					compound: theCompound,
 					highlight: {
-						path: pathArray
+						path: pathArray,
+						maxNumPassages: 1
 					}
 				}
 			};
 			term.push(stage0);
+			const stage2 = {
+				$match: { 'meanings.subject': { $in: subjectArray } }
+			};
+			if (subjectArray[0] !== '' && body.subject) term.push(stage2);
 
 			const stage1 = {
 				$project: {
+					_id: 1,
 					term: 1,
-					'meanings.subject': 1,
+					meanings: 1,
 					score: { $meta: 'searchScore' }, // Include search relevance score
 					highlights: { $meta: 'searchHighlights' } // Preserve highlights
 				}
@@ -197,15 +203,11 @@ export class TermController {
 			term.push(stage1);
 			// Stage 2: Filter by desired subject
 
-			const stage2 = {
-				$match: { 'meanings.subject': { $in: subjectArray } }
-			};
-			if (subjectArray[0] !== '' && body.subject) term.push(stage2);
 			// Stage 3: Unwind the 'meanings' array
 			const stage3 = {
 				$unwind: '$meanings'
 			};
-			term.push(stage3);
+			// term.push(stage3);
 			// Stage 4: Re-group the results  (Optional)
 			const stage4 = {
 				$group: {
@@ -216,7 +218,7 @@ export class TermController {
 					score: { $max: '$score' }
 				}
 			};
-			term.push(stage4);
+			// term.push(stage4);
 			const stage5 = {
 				$sort: { score: -1 }
 			};
