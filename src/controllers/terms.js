@@ -37,7 +37,19 @@ export class TermController {
 		if (cachedTerms)
 			result = JSON.parse(cachedTerms);
 		else {
-			const terms = await this.termModel.download();
+			const termsUnordered = await this.termModel.download();
+			const subjectOrder = ['Norma', 'Jurisprudencia', 'Doctrina', 'MATERIA'];
+			/* ordena los meanings de cada termino por materia y luego por año */
+			termsUnordered.forEach((t) => {
+				t.meanings.sort((a, b) => {
+					if (a.subject === b.subject && a.year === b.year)
+						return a.descriptor.localeCompare(b.descriptor, undefined, { numeric: true, sensitivity: 'base' });
+					if (a.subject === b.subject)
+						return b.year - a.year;
+					return subjectOrder.indexOf(a.subject) - subjectOrder.indexOf(b.subject);
+				});
+			});
+			const terms = termsUnordered.sort((a, b) => a.term.localeCompare(b.term, undefined, { numeric: true, sensitivity: 'base' }));
 			terms.forEach((t, i) => {
 				result += `\n\n${i + 1}) ${t.term}\n\n`;
 				t.meanings.forEach((m, i) => {
