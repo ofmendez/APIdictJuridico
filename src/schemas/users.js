@@ -11,6 +11,12 @@ const userSchema = z.object({
 	name: z.string().min(2, {
 		message: 'Name must be at least 2 characters long'
 	}),
+	profession: z.string().min(2, {
+		message: 'Profession must be at least 2 characters long'
+	}).optional(),
+	suscription: z.string().optional(),
+	timeToExpire: z.string().optional(),
+	initSuscription: z.date().optional(),
 	role: z.enum(['Administrador', 'Editor', 'Lector']).default('user'),
 	// optional fields
 	avatar: z.string().url({
