@@ -53,6 +53,7 @@ export class UserController {
 		this.redisClient.del('users');
 		console.log('--------->>>> model: ', this.userModel);
 		const body = await c.req.json();
+		body.initSuscription = new Date(body.initSuscription);
 		const result = validateUser(body);
 
 		if (!result.success)
@@ -86,6 +87,7 @@ export class UserController {
 	update = async (c) => {
 		this.redisClient.del('users');
 		const body = await c.req.json();
+		body.initSuscription = new Date(body.initSuscription);
 		const result = validatePartialUser(body);
 
 		if (!result.success)
