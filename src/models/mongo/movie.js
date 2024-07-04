@@ -1,7 +1,8 @@
 import { MongoClient } from 'mongodb';
 import { randomUUID } from 'node:crypto';
+const uri = `mongodb+srv://ofmendez:${process.env.ATLAS_PASS}@cluster0.ms7cuub.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
-const uri = `mongodb+srv://ofmendez:${process.env.ATLAS_PASS}@cluster0.bss36fz.mongodb.net/?retryWrites=true&w=majority`;
+// const uri = `mongodb+srv://ofmendez:${process.env.ATLAS_PASS}@cluster0.bss36fz.mongodb.net/?retryWrites=true&w=majority`;
 // const uri = `mongodb://myUserAdmin:${process.env.LINODE_PASS}@172-233-187-25.ip.linodeusercontent.com:27017/?authMechanism=DEFAULT`;
 
 const client = new MongoClient(uri);
@@ -9,7 +10,7 @@ const client = new MongoClient(uri);
 async function connect () {
 	try {
 		await client.connect();
-		const database = client.db('dictionary');
+		const database = client.db('dictionary2');
 		return database.collection('movies');
 	} catch (error) {
 		console.error('Error connecting to the database');

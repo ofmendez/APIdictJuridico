@@ -9,7 +9,7 @@ const client = new MongoClient(uri);
 async function connect () {
 	try {
 		await client.connect();
-		const database = client.db('dictionary');
+		const database = client.db('dictionary2');
 		return database.collection('users');
 	} catch (error) {
 		console.error('Error connecting to the database');

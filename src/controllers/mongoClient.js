@@ -1,5 +1,6 @@
 import { MongoClient } from 'mongodb';
-const uri = `mongodb+srv://ofmendez:${process.env.ATLAS_PASS}@cluster0.bss36fz.mongodb.net/?retryWrites=true&w=majority`;
+// const uri = `mongodb+srv://ofmendez:${process.env.ATLAS_PASS}@cluster0.bss36fz.mongodb.net/?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://ofmendez:${process.env.ATLAS_PASS}@cluster0.ms7cuub.mongodb.net/?retryWrites=true&w=majority`;
 
 // let clientUs = null;
 const clients = {
@@ -29,7 +30,7 @@ async function connect (collectionName) {
 		c = await getClient();
 	}
 	connecting = false;
-	return await c.db('dictionary').collection(collectionName);
+	return await c.db('dictionary2').collection(collectionName);
 }
 
 async function closeClient (collectionName) {
