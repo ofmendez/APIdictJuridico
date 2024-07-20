@@ -24,6 +24,9 @@ const termSchema = z.object({
 			source: z.string().min(2, {
 				message: 'La fuente debe tener al menos 2 caracteres'
 			}),
+			file: z.string().min(2, {
+				message: 'La url del archivo debe tener al menos 2 caracteres'
+			}).optional(),
 			_id: z.string().min(2, {
 				message: 'El id debe tener al menos 2 caracteres'
 			})
