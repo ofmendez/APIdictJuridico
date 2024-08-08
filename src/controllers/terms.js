@@ -57,7 +57,8 @@ export class TermController {
 					result += `AÑO: ${m.year}\n`;
 					result += `MATERIA: ${m.subject}\n`;
 					result += `${m.definition}\n`;
-					result += `FUENTE: ${m.source}\n\n`;
+					result += `FUENTE: ${m.source}\n`;
+					result += m.file ? `ENLACE: ${m.file}\n\n` : 'ENLACE: (pendiente) \n\n';
 				});
 			});
 			// result = convertArrayToCSV(terms);
