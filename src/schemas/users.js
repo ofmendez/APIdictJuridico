@@ -18,6 +18,7 @@ const userSchema = z.object({
 	timeToExpire: z.string().optional(),
 	initSuscription: z.date().optional(),
 	role: z.enum(['Administrador', 'Editor', 'Lector']).default('user'),
+	modules: z.string().optional(),
 	// optional fields
 	avatar: z.string().url({
 		message: 'Avatar must be a valid URL'
