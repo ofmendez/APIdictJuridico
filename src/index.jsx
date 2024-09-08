@@ -27,7 +27,10 @@ const createApp = ({ models }) => {
 	createMovieRouter({ route: app.route('/movies'), model: models.movieModel });
 	createTermRouter({ route: app.route('/terms'), model: models.termModel });
 
-	return app;
+	return {
+		fetch: app.fetch,
+		port: 3000
+	};
 };
 
 export default createApp;
