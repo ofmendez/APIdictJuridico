@@ -29,7 +29,7 @@ const createApp = ({ models }) => {
 
 	return {
 		fetch: app.fetch,
-		port: 3001
+		port: 3004
 	};
 };
 
