@@ -1,7 +1,7 @@
 // const uri = `mongodb://myUserAdmin:${process.env.LINODE_PASS}@172-233-187-25.ip.linodeusercontent.com:27017/?authMechanism=DEFAULT`;
 import { randomUUID } from 'node:crypto';
 
-const collectionName = 'termsc';
+const collectionName = 'termsd';
 
 export class TermModel {
 	constructor () {
