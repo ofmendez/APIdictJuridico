@@ -99,4 +99,9 @@ export class UserController {
 
 		return c.json(updatedUser);
 	};
+
+	updateOne = async ({ _id, lastLogin }) => {
+		const updatedUser = await this.userModel.update({ id: _id, input: { lastLogin } });
+		return updatedUser;
+	};
 }
