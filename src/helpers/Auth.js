@@ -14,7 +14,7 @@ const checkAuth = async (_email, _password, userController) => {
 		return { exist: false };
 	console.log('#> EXIST! ');
 	userController.updateOne({ _id: user._id, lastLogin: new Date() });
-	return { exist: true, user: { _id: user._id, email: user.email, role: user.role, name: user.name } };
+	return { exist: true, user: { _id: user._id, email: user.email, role: user.role, name: user.name, modules: user.modules } };
 };
 
 const handleLogin = async ({ c, userController }) => {

@@ -87,7 +87,8 @@ export class UserController {
 	update = async (c) => {
 		this.redisClient.del('users');
 		const body = await c.req.json();
-		body.initSuscription = new Date(body.initSuscription);
+		if (body.initSuscription)
+			body.initSuscription = new Date(body.initSuscription);
 		const result = validatePartialUser(body);
 
 		if (!result.success)
