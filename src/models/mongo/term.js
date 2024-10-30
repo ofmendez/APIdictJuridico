@@ -1,4 +1,4 @@
-// const uri = `mongodb://myUserAdmin:${process.env.LINODE_PASS}@172-233-187-25.ip.linodeusercontent.com:27017/?authMechanism=DEFAULT`;
+// const uri = `mongodb://myUserAdmin:${ .LINODE_PASS}@172-233-187-25.ip.linodeusercontent.com:27017/?authMechanism=DEFAULT`;
 import { randomUUID } from 'node:crypto';
 
 const collectionName = 'terms';
@@ -53,9 +53,13 @@ export class TermModel {
 	async getRandom () {
 		const db = await this.connect(collectionName);
 		try {
-			return await db.aggregate([{ $sample: { size: 1 } }]).toArray();
+			return await db.aggregate([
+				{ $sort: { updated_at: -1 } }, // Sort by updated_at in descending order
+				{ $limit: 10 }, // Limit to the last 10 modified terms
+				{ $sample: { size: 1 } } // Get a random term from the last 10 modified terms
+			]).toArray();
 		} finally {
-			this.closeClient(collectionName); ;
+			this.closeClient(collectionName);
 		}
 	}
 
