@@ -1,5 +1,5 @@
 import { MongoClient } from 'mongodb';
-const uri = `mongodb+srv://ofmendez:${process.env.ATLAS_PASS}@cluster0.ms7cuub.mongodb.net/?retryWrites=true&w=majority`;
+const uri = 'mongodb://localhost:27017';
 
 const clients = {
 	terms: null,

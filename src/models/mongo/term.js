@@ -1,4 +1,3 @@
-// const uri = `mongodb://myUserAdmin:${ .LINODE_PASS}@172-233-187-25.ip.linodeusercontent.com:27017/?authMechanism=DEFAULT`;
 import { randomUUID } from 'node:crypto';
 
 const collectionName = 'terms';
@@ -15,15 +14,6 @@ export class TermModel {
 
 	async getAll ({ genre }) {
 		const db = await this.connect(collectionName);
-		// if (genre)
-		// 	return db.find({
-		// 		genre: {
-		// 			$elemMatch: {
-		// 				$regex: genre,
-		// 				$options: 'i'
-		// 			}
-		// 		}
-		// 	}).toArray();
 		try {
 			return await db.find({}).toArray();
 		} finally {
@@ -42,7 +32,6 @@ export class TermModel {
 
 	async getById ({ id }) {
 		const db = await this.connect(collectionName);
-		// const objectId = new UUID(id);
 		try {
 			return await db.findOne({ _id: id });
 		} finally {
@@ -79,7 +68,6 @@ export class TermModel {
 
 	async update ({ id, input }) {
 		const db = await this.connect(collectionName);
-		// const objectId = new ObjectId(id);
 		try {
 			const { ok, value } = await db.findOneAndUpdate({ _id: id }, { $set: input }, { returnNewDocument: true });
 			if (!ok) return false;
@@ -91,7 +79,6 @@ export class TermModel {
 
 	async delete ({ id }) {
 		const db = await this.connect(collectionName);
-		// const objectId = new ObjectId(id);
 		try {
 			const { deletedCount } = await db.deleteOne({ _id: id });
 			return deletedCount > 0;

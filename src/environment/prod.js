@@ -1,13 +1,13 @@
 import createApp from '../index.jsx';
+import { connect, closeClient } from '../controllers/mongoClient.js';
 
-import { MovieModel } from '../models/mongo/movie.js';
 import { UserModel } from '../models/mongo/user.js';
 import { TermModel } from '../models/mongo/term.js';
 
 const userModel = new UserModel();
-const movieModel = new MovieModel();
 const termModel = new TermModel();
 
-const models = { userModel, movieModel, termModel };
+const models = { userModel, termModel };
+Object.values(models).forEach((model) => model.setEnv(connect, closeClient));
 
 export default createApp({ models });

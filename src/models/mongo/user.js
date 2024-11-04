@@ -14,15 +14,6 @@ export class UserModel {
 
 	async getAll ({ genre }) {
 		const db = await this.connect(collectionName);
-		// if (genre)
-		// 	return db.find({
-		// 		genre: {
-		// 			$elemMatch: {
-		// 				$regex: genre,
-		// 				$options: 'i'
-		// 			}
-		// 		}
-		// 	}).toArray();
 		try {
 			return await db.find({}).toArray();
 		} finally {
@@ -32,7 +23,6 @@ export class UserModel {
 
 	async getById ({ id }) {
 		const db = await this.connect(collectionName);
-		// const objectId = new UUID(id);
 		try {
 			return await db.findOne({ _id: id });
 		} finally {
@@ -56,7 +46,6 @@ export class UserModel {
 
 	async delete ({ id }) {
 		const db = await this.connect(collectionName);
-		// const objectId = new ObjectId(id);
 		try {
 			const { deletedCount } = await db.deleteOne({ _id: id });
 			return deletedCount > 0;
@@ -67,7 +56,6 @@ export class UserModel {
 
 	async update ({ id, input }) {
 		const db = await this.connect(collectionName);
-		// const objectId = new ObjectId(id);
 		try {
 			const { ok, value } = await db.findOneAndUpdate({ _id: id }, { $set: input }, { returnNewDocument: true });
 			if (!ok) return false;
